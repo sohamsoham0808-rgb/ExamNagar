@@ -26,7 +26,13 @@ export default function LoginPage() {
 
         try {
             // 1. Sign in with Firebase on client
-            const userCredential = await signInWithEmailAndPassword(clientAuth(), email, password)
+            const firebaseAuth = clientAuth()
+            if (!firebaseAuth) {
+                setError("Authentication service is not configured correctly. Please check environment variables.")
+                setLoading(false)
+                return
+            }
+            const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password)
             const idToken = await userCredential.user.getIdToken()
 
             // 2. Create session on server

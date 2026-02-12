@@ -14,16 +14,36 @@ const firebaseConfig = {
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
 
-function getFirebaseApp(): FirebaseApp {
+function getFirebaseApp(): FirebaseApp | null {
+    if (!process.env.NEXT_PUBLIC_FIREBASE_API_KEY) {
+        if (typeof window !== "undefined") {
+            console.warn("Firebase configuration is missing! Check your environment variables (must start with NEXT_PUBLIC_).");
+        }
+        return null;
+    }
+
     if (!app) {
-        app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+        try {
+            app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+        } catch (error) {
+            console.error("Failed to initialize Firebase:", error);
+            return null;
+        }
     }
     return app;
 }
 
-function getFirebaseAuth(): Auth {
+function getFirebaseAuth(): Auth | null {
+    const firebaseApp = getFirebaseApp();
+    if (!firebaseApp) return null;
+
     if (!auth) {
-        auth = getAuth(getFirebaseApp());
+        try {
+            auth = getAuth(firebaseApp);
+        } catch (error) {
+            console.error("Failed to initialize Firebase Auth:", error);
+            return null;
+        }
     }
     return auth;
 }
