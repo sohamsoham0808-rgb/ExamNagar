@@ -64,6 +64,12 @@ export async function signup(prevState: any, formData: FormData) {
         return { success: true }
     } catch (error: any) {
         console.error("Signup error:", error);
+
+        // Handle missing config error from our robust firebase-admin.ts
+        if (error.message?.includes("Firebase Admin not configured")) {
+            return { error: "Server authentication is not configured. Please contact the administrator to set up Firebase Service Account credentials." }
+        }
+
         // Map common Firebase errors to user friendly messages
         if (error.code === 'auth/email-already-exists') {
             return { error: "Email already exists." }

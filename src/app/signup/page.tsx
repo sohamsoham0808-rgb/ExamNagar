@@ -18,14 +18,19 @@ export default function SignupPage() {
         setLoading(true)
         setError(null)
 
-        const formData = new FormData(e.currentTarget)
-        const result = await signup(undefined, formData)
+        try {
+            const formData = new FormData(e.currentTarget)
+            const result = await signup(undefined, formData)
 
-        if (result?.error) {
-            setError(result.error)
+            if (result?.error) {
+                setError(result.error)
+            } else if (result?.success) {
+                router.push("/login")
+            }
+        } catch (err: any) {
+            setError(err.message || "An unexpected error occurred.")
+        } finally {
             setLoading(false)
-        } else if (result?.success) {
-            router.push("/login")
         }
     }
 
