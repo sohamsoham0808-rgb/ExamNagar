@@ -4,7 +4,8 @@ import { useState } from "react"
 import { signup } from "@/actions/auth"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
-import { LayoutGrid, Loader2 } from "lucide-react"
+import { Logo } from "@/components/ui/Logo"
+import { Loader2, ShieldCheck, Users, GraduationCap } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 
@@ -36,52 +37,72 @@ export default function SignupPage() {
 
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-xl border border-slate-100 space-y-8">
-                <div className="text-center space-y-2">
-                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto text-primary">
-                        <LayoutGrid size={24} />
+            <div className="w-full max-w-md bg-white p-10 rounded-2xl shadow-xl border border-slate-100 space-y-8">
+                <div className="text-center space-y-4">
+                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto text-primary">
+                        <Logo className="h-8 w-auto" />
                     </div>
-                    <h1 className="text-2xl font-black font-outfit uppercase tracking-tight text-slate-900">Create Account</h1>
-                    <p className="text-slate-400 text-sm font-medium">Join thousands of students learning daily.</p>
+                    <div>
+                        <h1 className="text-2xl font-bold text-slate-900">Create Account</h1>
+                        <p className="text-slate-500 text-sm mt-1">Join India's most trusted learning platform.</p>
+                    </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-4">
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Full Name</label>
-                            <Input name="name" type="text" placeholder="John Doe" className="h-12 rounded-xl bg-slate-50 border-slate-100" required />
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-semibold text-slate-700 ml-1">Full Name</label>
+                            <Input name="name" type="text" placeholder="John Doe" required />
                         </div>
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Email Address</label>
-                            <Input name="email" type="email" placeholder="john@example.com" className="h-12 rounded-xl bg-slate-50 border-slate-100" required />
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-semibold text-slate-700 ml-1">Email Address</label>
+                            <Input name="email" type="email" placeholder="name@example.com" required />
                         </div>
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Password</label>
-                            <Input name="password" type="password" placeholder="••••••••" className="h-12 rounded-xl bg-slate-50 border-slate-100" required />
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-semibold text-slate-700 ml-1">Password</label>
+                            <Input name="password" type="password" placeholder="••••••••" required />
                         </div>
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Role</label>
-                            <select name="role" className="w-full h-12 rounded-xl bg-slate-50 border-slate-100 px-3 text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary/20" defaultValue="student">
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="admin">Admin</option>
-                            </select>
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-semibold text-slate-700 ml-1">I am a...</label>
+                            <div className="grid grid-cols-3 gap-3">
+                                <label className="cursor-pointer">
+                                    <input type="radio" name="role" value="student" className="peer hidden" defaultChecked />
+                                    <div className="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 peer-checked:border-primary peer-checked:bg-primary/5 text-slate-600 peer-checked:text-primary transition-all">
+                                        <Users size={20} className="mb-1" />
+                                        <span className="text-[10px] font-bold uppercase">Student</span>
+                                    </div>
+                                </label>
+                                <label className="cursor-pointer">
+                                    <input type="radio" name="role" value="teacher" className="peer hidden" />
+                                    <div className="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 peer-checked:border-primary peer-checked:bg-primary/5 text-slate-600 peer-checked:text-primary transition-all">
+                                        <GraduationCap size={20} className="mb-1" />
+                                        <span className="text-[10px] font-bold uppercase">Teacher</span>
+                                    </div>
+                                </label>
+                                <label className="cursor-pointer">
+                                    <input type="radio" name="role" value="admin" className="peer hidden" />
+                                    <div className="flex flex-col items-center justify-center p-3 rounded-xl border border-slate-200 peer-checked:border-primary peer-checked:bg-primary/5 text-slate-600 peer-checked:text-primary transition-all">
+                                        <ShieldCheck size={20} className="mb-1" />
+                                        <span className="text-[10px] font-bold uppercase">Admin</span>
+                                    </div>
+                                </label>
+                            </div>
                         </div>
                     </div>
 
                     {error && (
-                        <div className="p-3 bg-red-50 text-red-500 text-sm font-medium rounded-lg text-center">
+                        <div className="p-3 bg-red-50 text-red-600 text-xs font-medium rounded-lg text-center border border-red-100">
                             {error}
                         </div>
                     )}
 
-                    <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest rounded-xl" disabled={loading} type="submit">
-                        {loading ? <Loader2 className="animate-spin" /> : "Create Account"}
+                    <Button className="w-full font-bold h-12" disabled={loading} type="submit">
+                        {loading ? <Loader2 className="animate-spin" /> : "Create Free Account"}
                     </Button>
                 </form>
 
-                <div className="text-center">
-                    <p className="text-slate-400 text-sm">
+                <div className="text-center pt-2">
+                    <p className="text-slate-500 text-sm">
                         Already have an account? <Link href="/login" className="text-primary font-bold hover:underline">Sign In</Link>
                     </p>
                 </div>

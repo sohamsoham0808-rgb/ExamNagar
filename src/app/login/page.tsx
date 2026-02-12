@@ -4,7 +4,8 @@ import { useState } from "react"
 import { login } from "@/actions/auth"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
-import { LayoutGrid, Loader2 } from "lucide-react"
+import { Logo } from "@/components/ui/Logo"
+import { Loader2 } from "lucide-react"
 import Link from "next/link"
 import { auth as clientAuth } from "@/lib/firebase"
 import { signInWithEmailAndPassword } from "firebase/auth"
@@ -25,17 +26,15 @@ export default function LoginPage() {
         const password = formData.get("password") as string
 
         try {
-            // 1. Sign in with Firebase on client
             const firebaseAuth = clientAuth()
             if (!firebaseAuth) {
-                setError("Authentication service is not configured correctly. Please check environment variables.")
+                setError("Authentication service is not configured correctly.")
                 setLoading(false)
                 return
             }
             const userCredential = await signInWithEmailAndPassword(firebaseAuth, email, password)
             const idToken = await userCredential.user.getIdToken()
 
-            // 2. Create session on server
             const finalFormData = new FormData()
             finalFormData.append("idToken", idToken)
 
@@ -49,7 +48,6 @@ export default function LoginPage() {
             }
         } catch (err: any) {
             console.error(err)
-            // Firebase auth error messages are often cryptic, map them if needed
             let message = "Invalid credentials."
             if (err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
                 message = "The email or password you entered is incorrect."
@@ -62,40 +60,50 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-            <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-xl border border-slate-100 space-y-8">
-                <div className="text-center space-y-2">
-                    <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto text-primary">
-                        <LayoutGrid size={24} />
+            <div className="w-full max-w-md bg-white p-10 rounded-2xl shadow-xl border border-slate-100 space-y-8">
+                <div className="text-center space-y-4">
+                    <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto text-primary">
+                        <Logo className="h-8 w-auto" />
                     </div>
-                    <h1 className="text-2xl font-black font-outfit uppercase tracking-tight text-slate-900">Welcome Back</h1>
-                    <p className="text-slate-400 text-sm font-medium">Enter your credentials to access your account.</p>
+                    <div>
+                        <h1 className="text-2xl font-bold text-slate-900">Welcome Back</h1>
+                        <p className="text-slate-500 text-sm mt-1">Please enter your details to sign in.</p>
+                    </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="space-y-4">
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Email Address</label>
-                            <Input name="email" type="email" placeholder="john@example.com" className="h-12 rounded-xl bg-slate-50 border-slate-100" required />
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-semibold text-slate-700 ml-1">Email Address</label>
+                            <Input name="email" type="email" placeholder="name@example.com" required />
                         </div>
-                        <div className="space-y-1">
-                            <label className="text-xs font-bold uppercase tracking-widest text-slate-500 ml-1">Password</label>
-                            <Input name="password" type="password" placeholder="••••••••" className="h-12 rounded-xl bg-slate-50 border-slate-100" required />
+                        <div className="space-y-1.5">
+                            <label className="text-xs font-semibold text-slate-700 ml-1">Password</label>
+                            <Input name="password" type="password" placeholder="••••••••" required />
                         </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                            <input type="checkbox" className="w-4 h-4 text-primary border-slate-300 rounded focus:ring-primary" id="remember" />
+                            <label htmlFor="remember" className="text-xs font-medium text-slate-600">Remember me</label>
+                        </div>
+                        <Link href="/forgot-password" title="Forgot Password" className="text-xs font-semibold text-primary hover:underline">Forgot Password?</Link>
                     </div>
 
                     {error && (
-                        <div className="p-3 bg-red-50 text-red-500 text-sm font-medium rounded-lg text-center">
+                        <div className="p-3 bg-red-50 text-red-600 text-xs font-medium rounded-lg text-center border border-red-100">
                             {error}
                         </div>
                     )}
 
-                    <Button className="w-full h-12 bg-primary hover:bg-primary/90 text-white font-black uppercase tracking-widest rounded-xl" disabled={loading} type="submit">
+                    <Button className="w-full font-bold h-12" disabled={loading} type="submit">
                         {loading ? <Loader2 className="animate-spin" /> : "Sign In"}
                     </Button>
                 </form>
 
-                <div className="text-center">
-                    <p className="text-slate-400 text-sm">
+                <div className="text-center pt-2">
+                    <p className="text-slate-500 text-sm">
                         Don't have an account? <Link href="/signup" className="text-primary font-bold hover:underline">Sign Up</Link>
                     </p>
                 </div>

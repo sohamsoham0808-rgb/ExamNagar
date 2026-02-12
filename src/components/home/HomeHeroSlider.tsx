@@ -8,28 +8,28 @@ import { cn } from "@/lib/utils"
 
 const SLIDES = [
     {
-        title: "Learn from India's Best Teachers",
-        subtitle: "Access 500+ premium courses for SSC, Banking, and Railway exams with personalized mentorship.",
-        cta: "Explore Courses",
+        title: "Your Dream Career Starts Here",
+        subtitle: "India's highest rated platform for SSC, Banking, and Railway exams. Quality education at affordable prices.",
+        cta: "Browse Courses",
         href: "/courses",
         image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1200",
-        badge: "Limited Time Offer: 50% OFF"
+        badge: "Trusted by 10 Lakh+ Students"
     },
     {
         title: "Daily Free Mock Tests & Analytics",
-        subtitle: "India's smartest test series with real-time feedback and AI-powered performance tracking.",
+        subtitle: "Real-time feedback and AI-powered performance tracking. Join the smartest test series for competitive exams.",
         cta: "Try Free Mock",
         href: "/tests",
         image: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1200",
-        badge: "Join 50k+ Aspirants"
+        badge: "India's #1 Test Series"
     },
     {
-        title: "Doubt Clearing Sessions Every Hour",
-        subtitle: "Never let a doubt stop your growth. Connect with experts instantly 24/7.",
-        cta: "Join Live Class",
+        title: "Live Classes by Top Educators",
+        subtitle: "Never stop learning with interactive live sessions and 24/7 doubt solving assistance.",
+        cta: "Join Live Now",
         href: "/live-classes",
         image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=1200",
-        badge: "Certified Educators"
+        badge: "Expert Faculty Support"
     }
 ]
 
@@ -57,60 +57,58 @@ export function HomeHeroSlider() {
     }, [next])
 
     return (
-        <section className="relative h-[650px] lg:h-[750px] overflow-hidden bg-slate-900">
+        <section className="relative h-[600px] lg:h-[700px] overflow-hidden bg-slate-900">
             {SLIDES.map((slide, index) => (
                 <div
                     key={index}
                     className={cn(
                         "absolute inset-0 transition-all duration-1000 ease-in-out",
-                        index === current ? "opacity-100 scale-100 z-10" : "opacity-0 scale-110 pointer-events-none"
+                        index === current ? "opacity-100 scale-100 z-10" : "opacity-0 scale-105 pointer-events-none"
                     )}
                 >
                     {/* Background Image with Overlay */}
                     <div className="absolute inset-0">
                         <img src={slide.image} className="w-full h-full object-cover" alt={slide.title} />
-                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/70 to-transparent"></div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/60 to-transparent"></div>
+                        <div className="absolute inset-0 bg-black/40"></div>
                     </div>
 
                     {/* Content */}
-                    <div className="relative z-20 container mx-auto h-full flex items-center px-4 md:px-8">
-                        <div className="max-w-2xl space-y-8">
+                    <div className="relative z-20 container mx-auto h-full flex items-center px-4">
+                        <div className="max-w-3xl space-y-6">
                             <div className={cn(
-                                "inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-widest uppercase backdrop-blur-md transition-all duration-700 delay-300 transform",
-                                index === current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                                "inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/20 border border-primary/30 text-white text-[10px] font-bold tracking-widest uppercase transition-all duration-700 delay-300 transform",
+                                index === current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                             )}>
-                                <Sparkles size={14} className="text-accent" />
+                                <Sparkles size={12} className="text-accent" />
                                 {slide.badge}
                             </div>
 
                             <h1 className={cn(
-                                "text-4xl md:text-6xl lg:text-7xl font-black font-outfit text-white leading-tight uppercase tracking-tighter transition-all duration-1000 delay-500 transform",
-                                index === current ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"
+                                "text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] transition-all duration-1000 delay-500 transform",
+                                index === current ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
                             )}>
-                                {slide.title.split(' ').map((word, i) => (
-                                    <span key={i} className={i % 2 === 1 ? "gradient-text" : ""}>{word} </span>
-                                ))}
+                                {slide.title}
                             </h1>
 
                             <p className={cn(
-                                "text-lg text-slate-300 leading-relaxed max-w-xl font-medium transition-all duration-700 delay-700 transform",
-                                index === current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                                "text-lg md:text-xl text-slate-200 leading-relaxed max-w-xl transition-all duration-700 delay-700 transform",
+                                index === current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                             )}>
                                 {slide.subtitle}
                             </p>
 
                             <div className={cn(
-                                "flex flex-wrap gap-4 transition-all duration-700 delay-1000 transform",
-                                index === current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                                "flex flex-wrap gap-4 pt-4 transition-all duration-700 delay-1000 transform",
+                                index === current ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
                             )}>
                                 <Link href={slide.href}>
-                                    <Button size="lg" className="h-14 px-8 rounded-2xl text-xs font-black uppercase tracking-widest shadow-2xl shadow-primary/20 bg-primary group">
-                                        {slide.cta} <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" size={16} />
+                                    <Button size="lg" className="h-14 px-8 font-bold shadow-xl shadow-primary/20">
+                                        {slide.cta} <ArrowRight className="ml-2" size={18} />
                                     </Button>
                                 </Link>
-                                <Button variant="outline" className="h-14 px-8 rounded-2xl text-xs font-black uppercase tracking-widest border-white/20 text-white hover:bg-white/10 backdrop-blur-sm">
-                                    <Play className="mr-2" size={16} fill="white" /> Watch Demo
+                                <Button variant="outline" className="h-14 px-8 font-bold border-white/30 text-white hover:bg-white/10 backdrop-blur-sm">
+                                    Watch Demo Class
                                 </Button>
                             </div>
                         </div>

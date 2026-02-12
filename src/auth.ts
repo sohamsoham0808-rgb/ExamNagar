@@ -8,6 +8,9 @@ export const auth = async () => {
 
     try {
         const decodedToken = await adminAuth.verifySessionCookie(sessionCookie, true)
+
+        if (!decodedToken) return null
+
         return {
             user: {
                 id: decodedToken.uid,
