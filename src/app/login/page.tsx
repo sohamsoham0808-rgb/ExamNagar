@@ -26,7 +26,7 @@ export default function LoginPage() {
 
         try {
             // 1. Sign in with Firebase on client
-            const userCredential = await signInWithEmailAndPassword(clientAuth, email, password)
+            const userCredential = await signInWithEmailAndPassword(clientAuth(), email, password)
             const idToken = await userCredential.user.getIdToken()
 
             // 2. Create session on server

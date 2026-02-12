@@ -1,5 +1,5 @@
-import { initializeApp, getApps, getApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp, getApps, getApp, type FirebaseApp } from "firebase/app";
+import { getAuth, type Auth } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -10,8 +10,22 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
-// Initialize Firebase
-const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// Lazy initialization to prevent crashes during SSR/static generation
+let app: FirebaseApp | undefined;
+let auth: Auth | undefined;
 
-export { app, auth };
+function getFirebaseApp(): FirebaseApp {
+    if (!app) {
+        app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
+    }
+    return app;
+}
+
+function getFirebaseAuth(): Auth {
+    if (!auth) {
+        auth = getAuth(getFirebaseApp());
+    }
+    return auth;
+}
+
+export { getFirebaseApp as app, getFirebaseAuth as auth };
