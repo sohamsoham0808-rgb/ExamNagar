@@ -90,7 +90,7 @@ export function Navbar() {
                                     <div className="group relative">
                                         <button className="flex items-center gap-2 bg-slate-50 hover:bg-slate-100 p-1.5 pr-4 rounded-2xl border border-slate-200 transition-all cursor-pointer">
                                             <div className="w-9 h-9 bg-primary rounded-xl flex items-center justify-center text-white font-black text-[10px]">
-                                                {user.displayName?.split(' ').map(n => n[0]).join('') || 'U'}
+                                                {user.displayName ? user.displayName.split(' ').map(n => n[0]).join('') : (user.email ? user.email[0].toUpperCase() : 'U')}
                                             </div>
                                             <span className="text-xs font-bold text-slate-600">My Panels</span>
                                             <ChevronDown size={14} className="text-slate-400 group-hover:rotate-180 transition-transform" />
