@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Facebook, Twitter, Instagram, Youtube, Mail, Phone, MapPin } from "lucide-react"
+import { Facebook, Twitter, Instagram, Youtube, Mail, Phone } from "lucide-react"
 import { CoursesIcon } from "@/components/icons"
 
 export function Footer() {
@@ -60,10 +60,6 @@ export function Footer() {
                         <div className="flex gap-3 text-sm">
                             <Phone className="shrink-0 text-primary" size={18} />
                             <span>+91 1800 123 4567</span>
-                        </div>
-                        <div className="flex gap-3 text-sm">
-                            <MapPin className="shrink-0 text-primary" size={18} />
-                            <span>Knowledge Hub, Sector 62, Noida, India</span>
                         </div>
                     </div>
                 </div>
